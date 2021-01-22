@@ -12,6 +12,9 @@ class RoamPrivateApi {
 	login;
 	pass;
 
+
+	
+
 	constructor(db, login, pass, options = { headless: true,
 		edn: null,
 		markdown: null,	
