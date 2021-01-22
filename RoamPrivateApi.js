@@ -156,9 +156,7 @@ class RoamPrivateApi {
 		await this.page.waitForTimeout(2000);
 		await this.page.click('.bp3-dialog-container .bp3-intent-primary');
 
-		await this.page.waitForTimeout(60000); // This can take quite some time on slower systems
-		// Network idle is a hack to wait until we donwloaded stuff. I don't think it works though.
-		await this.page.goto('https://news.ycombinator.com/', { waitUntil: 'networkidle2' });
+		await this.page.waitForTimeout(30000); // This can take quite some time on slower systems
 		return;
 	}
 	async downloadExport(folder) {
@@ -186,9 +184,7 @@ class RoamPrivateApi {
 		await this.page.waitForTimeout(2000);
 		await this.page.click('.bp3-dialog-container .bp3-intent-primary');
 
-		await this.page.waitForTimeout(60000); // This can take quite some time on slower systems
-		// Network idle is a hack to wait until we donwloaded stuff. I don't think it works though.
-		await this.page.goto('https://news.ycombinator.com/', { waitUntil: 'networkidle2' });
+		await this.page.waitForTimeout(30000); // This can take quite some time on slower systems
 		return;
 	}
 	async close() {
