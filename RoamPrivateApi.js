@@ -134,12 +134,12 @@ class RoamPrivateApi {
 		// await this.page.waitFor( 2000 );
 		// await this.page.click( '.bp3-menu :nth-child(4) a' );
 		//Change markdown to JSON:
-		// This should contain markdown
-		await this.page.waitForTimeout( 2000 );
-		await this.page.click( '.bp3-dialog-container .bp3-popover-wrapper button' );
-		// This should contain JSON
-		await this.page.waitForTimeout( 2000 );
-		await this.page.click( '.bp3-dialog-container .bp3-popover-wrapper .bp3-popover-dismiss' );
+// 		// This should contain markdown
+// 		await this.page.waitForTimeout( 2000 );
+// 		await this.page.click( '.bp3-dialog-container .bp3-popover-wrapper button' );
+// 		// This should contain JSON
+// 		await this.page.waitForTimeout( 2000 );
+// 		await this.page.click( '.bp3-dialog-container .bp3-popover-wrapper .bp3-popover-dismiss' );
 		// This should contain "Export All"
 		await this.page.waitForTimeout( 2000 );
 		await this.page.click( '.bp3-dialog-container .bp3-intent-primary' );
