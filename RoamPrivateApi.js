@@ -12,7 +12,10 @@ class RoamPrivateApi {
 	login;
 	pass;
 
-	constructor(db, login, pass, options = { headless: true, folder: null, nodownload: false }) {
+	constructor(db, login, pass, options = { headless: true,
+		edn: null,
+		markdown: null,	
+		nodownload: false }) {
 		this.db = db;
 		this.login = login;
 		this.pass = pass;
@@ -22,12 +25,22 @@ class RoamPrivateApi {
 			options.folder = os.tmpdir();
 		}
 	}
+	async download() {
+		// Mostly for testing purposes when we want to use a preexisting download.
+		if (!this.options.nodownload) {
+			await this.logIn();
+			await this.downloadExport(this.options.markdown);
+			await this.downloadEDN(this.options.edn)
+		}
+		await this.close();
+	}
 
 	async getExportData() {
 		// Mostly for testing purposes when we want to use a preexisting download.
 		if (!this.options.nodownload) {
 			await this.logIn();
-			await this.downloadExport(this.options.folder);
+			await this.downloadExport(this.options.markdown);
+			await this.downloadEDN(this.options.edn)
 		}
 		const latestExport = this.getLatestFile(this.options.folder);
 		const content = await this.getContentsOfRepo(this.options.folder, latestExport);
@@ -123,17 +136,19 @@ class RoamPrivateApi {
 	async downloadEDN(folder) {
 		await this.page._client.send('Page.setDownloadBehavior', {
 			behavior: 'allow',
-			downloadPath: folder + 'edn',
+			downloadPath: folder
 		});
 		// Try to download
 		// await this.page.goto( 'https://roamresearch.com/#/app/' + this.db );
 		// await this.page.waitForNavigation();
 		await this.page.waitForSelector('.bp3-icon-more');
 		await this.clickMenuItem('Export All');
-		await this.page.click('.bp3-icon-more');
-		// This should contain "Export All"
-		await this.page.waitFor(2000);
-		await this.page.click('.bp3-menu :nth-child(2) a');
+		// 		// This should contain markdown
+		await this.page.waitForTimeout( 2000 );
+		await this.page.click( '.bp3-dialog-container .bp3-popover-wrapper button' );
+		// 		// This should contain JSON
+		await this.page.waitForTimeout( 2000 );
+		await this.page.click( '.bp3-dialog-container .bp3-popover-wrapper .bp3-menu li:nth-child(2) a');
 
 		await this.page.waitForTimeout(2000);
 		await this.page.click('.bp3-dialog-container .bp3-intent-primary');
